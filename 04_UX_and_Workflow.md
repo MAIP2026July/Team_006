@@ -37,11 +37,11 @@ graph TD
     end
 
     %% Lane 4: AI & Backend Engine
-    subgraph Lane_Backend_AI["🧠 LANE 4: BACKEND & AI ENGINE (Gemini / Whisper)"]
+    subgraph Lane_Backend_AI["🧠 LANE 4: BACKEND & AI ENGINE (GPT-5 mini / AWS Speech-to-Text)"]
         D1["pdf-parse Text Extraction + Context Cap (< 2,000 tokens)<br><b>[Deterministic]</b>"]
-        D2["Gemini 1.5 Flash: Synthesize 5 Questions<br><b>[Probabilistic / LLM]</b><br><i>(Guardrail: Strict overlap with JD)</i>"]
-        D3["Gemini 1.5 Flash: Generate 25 STAR Answers & Pitfalls<br><b>[Probabilistic / LLM]</b>"]
-        D4["Whisper STT: Audio-to-Text Transcription<br><b>[Probabilistic - Target WER &lt; 8%]</b>"]
+        D2["GPT-5 mini: Synthesize 5 Questions<br><b>[Probabilistic / LLM]</b><br><i>(Guardrail: Strict overlap with JD)</i>"]
+        D3["GPT-5 mini: Generate 25 STAR Answers & Pitfalls<br><b>[Probabilistic / LLM]</b>"]
+        D4["AWS Speech-to-Text: Audio-to-Text Transcription<br><b>[Probabilistic - Target WER &lt; 8%]</b>"]
         D5["Calculate WPM & Match Regex Fillers ('um', 'like')<br><b>[Deterministic]</b>"]
     end
 

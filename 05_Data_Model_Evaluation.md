@@ -62,7 +62,7 @@ To control costs and prevent context overflow, inputs undergo sanitization befor
 | :--- | :--- | :--- | :--- |
 | **Simple Rule-Based Keyword Matcher** | Extremely cheap, deterministic, zero latency | Cannot generate novel questions; unable to assess conceptual nuances in a project description. | **Rejected** as core generator; retained only for regex filler-word counting. |
 | **Fine-Tuned Open-Source LLM (e.g., Llama 3 8B)** | Full data control, offline deployability, zero vendor lock-in | High upfront GPU infrastructure costs, deployment complexity, cold-start latency on serverless backends. | **Rejected for MVP**; unviable for a lean pilot. |
-| **Commercial Foundation Model APIs (Gemini 1.5 Flash / GPT-4o-mini)** | SOTA reasoning, large context window, fast time-to-market, negligible token cost ($0.15/1M input tokens). | Dependency on API uptime and rate limits. | **Selected:** Ideal for rapid experimentation, lowest initial capital expenditure, and reliable structured JSON outputs. |
+| **Commercial Foundation Model APIs (OpenAI GPT-5 mini)** | SOTA reasoning, large context window, fast time-to-market, negligible token cost ($0.15/1M input tokens). | Dependency on API uptime and rate limits. | **Selected:** Ideal for rapid experimentation, lowest initial capital expenditure, and reliable structured JSON outputs. |
 
 ---
 

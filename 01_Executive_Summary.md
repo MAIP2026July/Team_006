@@ -31,7 +31,7 @@ Under current alternatives, job seekers rely on static question portals (Geeksfo
 ## 5. Business Viability & Unit Economics Snapshot
 PrepLens avoids the high friction of recurring SaaS subscriptions in favor of an **event-driven micro-transaction model** tailored to student purchasing behavior:
 * **Price Point:** **₹40.00** per comprehensive guide unlock + mock interview pass.
-* **Variable Cost of Goods Sold (COGS):** **₹6.52** per paid session (LLM token inference ₹0.25 + 8-minute Whisper STT audio ₹4.03 + Razorpay processing ₹0.94 + cloud hosting ₹0.80).
+* **Variable Cost of Goods Sold (COGS):** **₹6.52** per paid session (OpenAI GPT-5 mini token inference ₹0.25 + 8-minute AWS Speech-to-Text audio ₹4.03 + Razorpay processing ₹0.94 + cloud hosting ₹0.80).
 * **Net Contribution Margin:** **₹33.48 per transaction (~83.7% Gross Margin)**.
 * **Scaling Safety Guardrail:** To eliminate the risk of power users exhausting margin via runaway audio costs, sessions enforce a hard cap of 5 voice questions / 10 minutes maximum recording time.
 

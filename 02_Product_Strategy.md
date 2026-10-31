@@ -56,10 +56,10 @@ To avoid the trap of "automating everything," potential AI features are evaluate
 
 For the MVP and pilot scaling, PrepLens selects an **API-First & Workflow Orchestration Architecture**:
 
-* **Text Generation (LLM):** Partner via commercial APIs (Google Gemini 1.5 Flash / OpenAI GPT-4o-mini).
-  * *Why:* Training a proprietary foundational model requires millions in GPU compute and offers zero competitive edge for general reasoning. Gemini/OpenAI provide state-of-the-art context window capacity (handling 10-page resumes and long JDs) at fraction-of-a-cent token pricing.
-* **Audio & Speech-to-Text (STT):** Fast Whisper API / Browser Speech Recognition API.
-  * *Why:* Low-latency transcription is critical for conversational feel. Web-speech API provides zero-cost initial capture, with server-side Whisper handling nuanced technical jargon.
+* **Text Generation (LLM):** Partner via commercial APIs (OpenAI GPT-5 mini).
+  * *Why:* Training a proprietary foundational model requires millions in GPU compute and offers zero competitive edge for general reasoning. OpenAI GPT-5 mini provides state-of-the-art reasoning and context window capacity (handling multi-page resumes and long JDs) with ultra-low latency at fraction-of-a-cent token pricing.
+* **Audio & Speech-to-Text (STT):** AWS Speech-to-Text (Amazon Transcribe).
+  * *Why:* Low-latency transcription and enterprise-grade acoustic modeling. AWS Transcribe provides robust recognition of diverse technical jargon and regional speech patterns.
 * **Proprietary Moat / What We Build:**
   * Proprietary prompt engineering pipeline with role-conditioned system rubrics.
   * Context parsing algorithms extracting hard tech skills, project constraints, and seniority tiers.

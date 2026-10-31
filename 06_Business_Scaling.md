@@ -39,7 +39,7 @@ Below is the detailed **Unit Economics Breakdown** for a single ₹40 paid user 
 | **Payment Gateway Fee (Razorpay)** | 2.0% transaction fee + 18% GST on fee (2.36% net) | -₹0.94 | 2.35% |
 | **LLM Inference: Input Context** | ~2,000 prompt tokens (Resume + JD + System Prompt) @ $0.15 / 1M tokens | -₹0.02 | 0.05% |
 | **LLM Inference: Output Generation** | ~4,500 output tokens (25 questions + model answers) @ $0.60 / 1M tokens | -₹0.23 | 0.58% |
-| **Speech-to-Text Audio (STT)** | 8 minutes of audio transcription via Whisper API @ $0.006 / min | -₹4.03 | 10.08% |
+| **Speech-to-Text Audio (STT)** | 8 minutes of audio transcription via AWS Speech-to-Text (Amazon Transcribe) | -₹4.03 | 10.08% |
 | **Cloud Hosting & Database (Supabase)**| Serverless compute, egress bandwidth, and database write | -₹0.80 | 2.00% |
 | **Customer Support & Buffer** | Dispute allocation and logging overhead | -₹0.50 | 1.25% |
 | **Total Variable Cost of Goods Sold (COGS)**| **Sum of Variable Operational Costs** | **-₹6.52** | **16.3%** |
