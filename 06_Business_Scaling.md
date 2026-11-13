@@ -2,94 +2,106 @@
 
 ## 1. Monetization Strategy & Pricing Architecture
 
-PrepLens implements an **Event-Driven Micro-Transaction Model** designed specifically around the purchasing psychology of Indian college students and early-career job seekers:
+PrepLens uses an **event-driven, one-time purchase model** rather than a mandatory subscription. The current live-product pricing is:
 
+| Product | Current Price | Primary Value |
+| :--- | ---: | :--- |
+| **Free Preview** | **₹0** | Sample contextual questions that demonstrate personalization before purchase. |
+| **Basic Prep Guide** | **₹30** | Entry-level paid preparation for candidates who want more depth than the free preview. |
+| **Pro Prep Guide** | **₹60** | Deeper preparation content, examples, and structured guidance. |
+| **AI Mock Interview** | **₹100** | Practice under interview-like pressure with AI-led questioning and feedback. |
+
+The commercial hypothesis is that interview preparation is **episodic**: users are more likely to pay around an upcoming interview than commit to a recurring monthly subscription. This is a **product hypothesis to validate in the pilot**, not yet a proven behavioral fact.
+
+### Product Funnel
+
+```text
+Free contextual preview
+        ↓
+Candidate sees evidence of personalization
+        ↓
+Chooses required depth
+   ├── Basic ₹30
+   ├── Pro ₹60
+   └── AI Mock Interview ₹100
+        ↓
+Measure value, completion, repeat purchase and cost-to-serve by path
 ```
-[Top of Funnel: Free Tier]
-* 0 Financial Friction
-* User uploads Resume + JD
-* Receives 5 Custom-Tailored Questions
-        |
-        |  "Experience the Personalization Hook"
-        v
-[Conversion Moment: ₹40 Micro-Transaction (~$0.48)]
-* Instant Razorpay Checkout (UPI, GPay, PhonePe, Paytm, Cards)
-* Zero subscription commitment (eliminates recurring billing anxiety)
-* Delivers:
-  1. 25-Question Comprehensive Guide (Approach + Ideal Model Answer + Pitfalls)
-  2. 1 Interactive Voice-Enabled AI Mock Interview Session with Scorecard
-  3. Formatted PDF / Offline Download
-```
-
-### Why Micro-Transactions Over Subscriptions?
-1. **Low Friction for Students:** In India, university students exhibit high resistance to recurring SaaS subscriptions (e.g., ₹499/month), which require credit cards or complex UPI autopay mandates. A one-time ₹40 impulse purchase is lower than the cost of a canteen coffee or snack.
-2. **Event-Driven Demand:** Interview preparation is episodic, not continuous. Candidates need intense preparation 2–3 days prior to an interview, making a monthly recurring subscription feel wasteful to the customer.
 
 ---
 
-## 2. Granular Unit Economics & Contribution Margin
+## 2. Unit Economics: Pilot Measurement Model
 
-The viability of an AI-powered SaaS product depends entirely on maintaining a wide spread between the price charged and the underlying token/audio inference costs. 
+The earlier design used a single ₹40 bundle. The product has since evolved to three separate paid paths, so the correct PM approach is to measure **contribution margin by workflow**, not assume one margin for every user.
 
-Below is the detailed **Unit Economics Breakdown** for a single ₹40 paid user session:
+### Contribution Formula
 
-| Cost / Revenue Component | Calculation Basis | Cost (INR) | % of Revenue |
-| :--- | :--- | :--- | :--- |
-| **Gross Revenue per Transaction** | Single Unlock Fee | **₹40.00** | **100.0%** |
-| **Payment Gateway Fee (Razorpay)** | 2.0% transaction fee + 18% GST on fee (2.36% net) | -₹0.94 | 2.35% |
-| **LLM Inference: Input Context** | ~2,000 prompt tokens (Resume + JD + System Prompt) @ $0.15 / 1M tokens | -₹0.02 | 0.05% |
-| **LLM Inference: Output Generation** | ~4,500 output tokens (25 questions + model answers) @ $0.60 / 1M tokens | -₹0.23 | 0.58% |
-| **Speech-to-Text Audio (STT)** | 8 minutes of audio transcription via AWS Speech-to-Text (Amazon Transcribe) | -₹4.03 | 10.08% |
-| **Cloud Hosting & Database (Supabase)**| Serverless compute, egress bandwidth, and database write | -₹0.80 | 2.00% |
-| **Customer Support & Buffer** | Dispute allocation and logging overhead | -₹0.50 | 1.25% |
-| **Total Variable Cost of Goods Sold (COGS)**| **Sum of Variable Operational Costs** | **-₹6.52** | **16.3%** |
-| **Net Contribution Margin per User** | **Revenue - Total COGS** | **₹33.48** | **83.7%** |
+> **Contribution per completed journey = Price − payment fees − model/API cost − speech cost − hosting/egress − support/refund allocation**
 
-> **Key Insight:** Even after factoring in audio speech transcription and payment processing, PrepLens maintains an extraordinary **~83.7% gross contribution margin**.
+| Workflow | Revenue | Main Variable Cost Drivers | Pilot Question |
+| :--- | ---: | :--- | :--- |
+| **Basic Guide** | ₹30 | Payment fee, text-generation tokens, hosting | Can this remain attractive after transaction and inference costs? |
+| **Pro Guide** | ₹60 | Higher text-generation volume, payment fee, hosting | Does the additional depth improve conversion/value enough to justify higher generation cost? |
+| **AI Mock Interview** | ₹100 | Speech-to-text minutes, LLM follow-up turns, hosting, payment fee | Can the most compute-intensive workflow maintain a healthy contribution after audio and follow-up usage? |
+
+### Important Evidence Boundary
+
+The cost figures in this capstone are **planning assumptions / target-cost models unless supported by production logs**. They should not be presented as observed gross margin. During pilot, PrepLens should capture actual API usage, audio minutes, payment fees, refunds, and hosting consumption for each completed journey.
 
 ---
 
-## 3. Power-User Scaling Risks & Mathematical Quota Guardrails
+## 3. Scaling Guardrails
 
-### The "Runaway Audio Cost" Threat
-While text inference is virtually costless (< ₹0.30 per generation), audio transcription is the single largest cost vulnerability. If an unconstrained user practices in the mock interview room for 45 minutes:
-$$\text{45 minutes} \times \$0.006/\text{minute} \times 84\text{ INR/\$} = \mathbf{₹22.68\text{ STT Cost}}$$
-Adding gateway and LLM costs would push total COGS to ~₹25.00, eroding the gross margin from 83% down to 37%.
+### Primary Cost Risk: Unbounded AI Mock Usage
 
-### The Architectural Guardrail
-To safeguard unit economics, PrepLens enforces **session-level throttling constraints**:
-* Each ₹40 unlock entitles the user to **1 Mock Interview Pass** consisting of:
-  * Maximum **5 simulated voice questions**.
-  * Hard audio recording cap of **2 minutes per response** (Total session cap: 10 minutes maximum audio).
-  * Enforces an absolute ceiling on STT cost at **₹5.04**, guaranteeing a minimum contribution margin of **> 75%** even in worst-case usage scenarios.
-* Additional mock sessions are monetized as add-on booster packs (e.g., *"3 Additional Mock Sessions for ₹49"*).
+Voice interactions are expected to be the most variable cost component because cost grows with **audio duration and follow-up turns**. The product therefore uses quota controls such as:
+
+* Maximum questions per mock session.
+* Maximum recording duration per answer/session.
+* Token/output caps for AI feedback.
+* Clear handling of retries so failed requests do not silently multiply cost.
+* Separate telemetry for Basic, Pro, and Mock Interview cost-to-serve.
+
+These guardrails protect the business while also making the user experience predictable.
 
 ---
 
-## 4. Customer Acquisition & LTV / CAC Dynamics
+## 4. Acquisition, Retention, and LTV/CAC — Hypotheses to Validate
 
-### Acquisition Channels (Low CAC Strategy)
-* **Campus Placement Ambassadors:** Appoint student reps across Tier-2 and Tier-3 engineering colleges offering placement drive prep kits.
-* **Direct Job-Post Hijacking (Organic Social):** Publish automated, highly tailored question guides on LinkedIn under trending hiring posts (e.g., *"Accenture is hiring 2,000 Associate Software Engineers—here are 5 tailored questions from PrepLens"*).
-* **Target Blended CAC:** **₹10 – ₹15** per acquired user.
+Potential low-cost acquisition channels include campus-placement communities, student ambassadors, organic role-specific content, referrals, and targeted social distribution.
 
-### Customer Lifetime Value (LTV) Projection
-While a single purchase yields ₹40, the average candidate in placement season interviews for 2 to 4 companies over a 3-month cycle.
-* Repeat Purchase Rate: Estimated at 35% based on multi-interview job search patterns.
-* Average Transactions per Active User ($N$): 1.35 purchases.
-* Gross Revenue per Customer: $1.35 \times ₹40 = \mathbf{₹54.00}$.
-* Net Contribution Profit per Customer: $1.35 \times ₹33.48 = \mathbf{₹45.20}$.
-* **LTV to CAC Ratio:**
-  $$\frac{\text{Net LTV}}{\text{CAC}} = \frac{₹45.20}{₹15.00} = \mathbf{3.01\times}$$
-  *(A 3:1 ratio satisfies standard venture and MBA benchmarks for healthy SaaS unit economics).*
+The earlier artifact used specific CAC, repeat-purchase and LTV:CAC figures as if they were established. In the revised plan these are treated correctly as **pilot hypotheses**.
+
+| Metric | Pilot Measurement |
+| :--- | :--- |
+| **CAC** | Actual acquisition spend ÷ newly acquired paying customers, by channel. |
+| **Repeat Purchase Rate** | % of paid users purchasing again for another role/interview. |
+| **Revenue per Paying User** | Total paid revenue ÷ unique paying users. |
+| **Contribution per Paying User** | Revenue minus directly attributable variable costs. |
+| **LTV:CAC** | Calculated only after enough repeat-purchase and retention evidence exists. |
+
+**Decision rule:** do not claim a healthy LTV:CAC ratio until repeat purchase and acquisition economics are observed in a sufficiently sized pilot cohort.
 
 ---
 
 ## 5. Scaling Constraints & Operational Bottlenecks
 
-1. **Provider Rate Limiting During Peak Campus Hours:**
-   * During hiring assessment days (typically Saturday/Sunday mornings), thousands of students prepare simultaneously. To prevent hitting LLM API tier concurrency caps, PrepLens implements an asynchronous queuing system with visual progress indicators.
-2. **Payment Gateway Latency & Drop-offs:**
-   * UPI failure rates on 4G campus networks can hit 8–12%. PrepLens integrates instant abandoned-cart retries and fallback UPI QR codes directly on the web interface.
-3. **Domain Coverage Drift:**
-   * Expanding from IT/Software to non-tech fields (Sales, Finance, Operations) requires tailored system prompt libraries to prevent generic, low-value model answers.
+1. **Model/API Rate Limits and Latency:** Peak placement periods may create bursts of generation demand. Queueing, graceful progress states, retries, and provider fallbacks should be tested before scaling.
+2. **Payment Failures / Drop-Off:** Track checkout initiation, completion, failure and retry by package rather than assuming all free users convert similarly.
+3. **Voice Cost Variability:** Mock-interview margins can deteriorate if duration and follow-up turns are unconstrained; session quotas and cost alerts are therefore launch controls.
+4. **Domain Coverage Drift:** Expansion beyond IT/software requires domain-specific evaluation sets and prompt/rubric tuning before claiming equivalent quality.
+5. **Support and Refund Load:** Growth can improve revenue while still weakening economics if failed generations, payment disputes or support demand grow faster than contribution.
+
+---
+
+## 6. Pilot Business Recommendation
+
+**Recommendation: PILOT, not SCALE.**
+
+Move to broader rollout only when PrepLens demonstrates, with measured data:
+
+* acceptable conversion from free preview to at least one paid path,
+* positive contribution margin by paid workflow,
+* controlled mock-interview cost per completed session,
+* repeat usage or repeat purchase that supports sustainable acquisition economics,
+* and acceptable quality / trust metrics from the evaluation framework.

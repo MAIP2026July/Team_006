@@ -14,11 +14,14 @@
 ## 🚀 1-Minute Executive Summary 
 **PrepLens AI** is an intelligent, domain-specific interview coach engineered to eliminate candidate interview failure caused by **preparation-context mismatch**. 
 
-* **The Problem:** Technical job seekers (specifically engineering freshers) face a 70–90% rejection rate in interviews. Failure rarely stems from coding inability; it stems from candidates preparing for generic textbook questions rather than the exact tech stack and operational context specified in the employer’s **Job Description (JD)**.
+* **The Problem:** Technical job seekers often prepare with generic interview content that is disconnected from the specific role and their own experience. The scale and causes of this gap are treated as **pilot hypotheses to validate**, not as universal rejection statistics.
 * **The Solution:** PrepLens synthesizes an unstructured candidate resume alongside the target JD to generate hyper-personalized questions, structured model answers, and a live voice-simulated mock interview room with real-time speech analytics.
-* **The Unit Economics:** An event-driven micro-transaction model (**₹40 per unlock**). With an inference + STT cost of **₹6.52**, PrepLens delivers an extraordinary **83.7% Gross Contribution Margin** per transaction.
+* **The Business Model:** An event-driven one-time purchase model with **Basic ₹30, Pro ₹60, and AI Mock Interview ₹100**. Contribution margin, CAC, repeat purchase, and LTV are **pilot measurements to validate**, not claimed production results.
 
 ---
+
+## 🔄 Product Evolution
+The original approved topic focused on hiring managers/recruiters. During product development, PrepLens was deliberately reframed as a **B2C candidate-preparation product** because the most tangible MVP value was contextual preparation and practice. The historical `topic_approval_form.md` is retained unchanged; the PRD, strategy, prototype, and presentation reflect the current direction. The original ₹40 bundle was also replaced by separate **Basic ₹30, Pro ₹60, and AI Mock Interview ₹100** paths so value and cost-to-serve can be measured independently.
 
 ## 🗂️ Complete Product Management Artifact Index
 
@@ -32,7 +35,7 @@ As instructed for the capstone submission, all artifacts are documented in unamb
 | **[`03_PM_Artifact_Pack.md`](./03_PM_Artifact_Pack.md)** | Detailed Persona profiles ("Arjun" the fresher, "Priya" the career switcher), phased 4-version roadmap, and quantitative metric trees. |
 | **[`04_UX_and_Workflow.md`](./04_UX_and_Workflow.md)** | **Mermaid Swimlane Workflow Diagram** classifying deterministic vs. probabilistic steps, hallucination risk points, and Human-in-the-Loop review gates. |
 | **[`05_Data_Model_Evaluation.md`](./05_Data_Model_Evaluation.md)** | AI task decomposition, context token budgeting (<2,000 tokens), **LLM-as-a-Judge offline evaluation harness**, and quantitative SLA thresholds. |
-| **[`06_Business_Scaling.md`](./06_Business_Scaling.md)** | Target costing analysis, granular unit economics table (₹40 revenue vs ₹6.52 COGS), runaway audio quota guardrails, and LTV:CAC model (3.01x). |
+| **[`06_Business_Scaling.md`](./06_Business_Scaling.md)** | Target-costing logic, contribution-margin measurement by Basic/Pro/Mock workflow, voice-usage guardrails, and a pilot plan for validating CAC, repeat purchase, and LTV. |
 | **[`07_Ethics_Governance.md`](./07_Ethics_Governance.md)** | DPDPA 2023 compliance, Zero-Data Retention (ZDR) enterprise policies, regional Indian accent bias mitigations in STT, and launch blockers. |
 | **[`08_Prototype_Readme.md`](./08_Prototype_Readme.md)** | Prototype documentation outlining what the live application proves vs. what is deferred. |
 | **[`09_AI_Collaboration_Log.md`](./09_AI_Collaboration_Log.md)** | Transparent disclosure of AI tool usage, prompt evolution, AI weaknesses, and human PM strategic overrides. |
@@ -59,13 +62,13 @@ graph TD
 
     subgraph Probabilistic_AI["3. Generative AI Engine [Probabilistic - Guardrailed]"]
         PromptEngine["Role-Conditioned System Prompt"]
-        LLM["OpenAI GPT-5 mini"]
+        LLM["Commercial Foundation Model API (benchmark-selected)"]
         Questions5["5-Question Free Teaser"]
         PrepGuide25["25-Question Guide + Model Answers (STAR)"]
     end
 
     subgraph Monetization["4. Micro-Transaction Gateway"]
-        Razorpay["Razorpay Gateway (₹40 UPI / Cards)"]
+        Razorpay["Razorpay Gateway (Basic ₹30 / Pro ₹60 / Mock ₹100)"]
         HMAC["Server-Side HMAC Signature Verification"]
     end
 
@@ -109,8 +112,8 @@ npm test
 
 ### 2. AI Model & Guardrail Verification (AI PM Layer)
 Because generative AI is probabilistic, the system enforces strict automated checks around the model's outputs and costs:
-* **JSON Schema Conformance:** Automated schema validation verifies that 100% of OpenAI GPT-5 mini responses parse directly into the UI's question/answer accordion structure without syntax breaks (Benchmark: `> 99.5% valid JSON`).
-* **Context Budgeting Enforcement:** Pre-flight token truncation algorithms ensure resume and JD inputs never exceed the `< 2,000 prompt token` budget, guaranteeing that API inference costs remain below ₹0.30 per generation.
+* **JSON Schema Conformance:** Automated schema validation verifies that model responses parse directly into the UI's question/answer accordion structure without syntax breaks (Benchmark: `> 99.5% valid JSON`).
+* **Context Budgeting Enforcement:** Pre-flight token truncation algorithms ensure resume and JD inputs never exceed the `< 2,000 prompt token` budget, so cost and latency remain within defined pilot guardrails; actual cost is measured from provider usage logs.
 * **Acoustic Transcription Accuracy:** AWS Speech-to-Text (Amazon Transcribe) is benchmarked against a 100-sample test set of Indian-accented technical terms (Target: `Word Error Rate (WER) < 8.0%`).
 * **Deterministic Fallback Gate:** In-memory checks simulate image-only PDF uploads and network timeouts to verify that the app displays polite guidance and switches to manual/text mode rather than crashing.
 

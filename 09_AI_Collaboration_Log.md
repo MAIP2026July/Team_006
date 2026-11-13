@@ -19,8 +19,14 @@
 
 ### Human Corrections
 - **What we changed:** We completely pivoted the Target Persona from "Hiring Manager" to "Job Seeker / Candidate" based on the actual PrepLens presentation deck. We also moved the Voice Mock Interview into the core MVP value proposition.
-- **Why we changed it:** The business model relies on B2C micro-transactions (₹40 unlocks) rather than enterprise B2B SaaS subscriptions.
+- **Why we changed it:** The business model evolved toward B2C one-time purchases rather than an enterprise B2B SaaS subscription. The current live product separates paid depth into **Basic ₹30, Pro ₹60, and AI Mock Interview ₹100**.
 - **What judgment was applied:** Product judgment was used to recognize that a B2C model requires an immediate "wow" factor (the Voice Mock Interview) to drive impulse conversions, whereas a B2B tool would prioritize ATS integrations.
+
+### Product Evolution / Evidence of PM Learning
+- **Original approved hypothesis:** The topic-approval form initially targeted hiring managers, technical recruiters, and educators.
+- **What changed:** Product development revealed a clearer immediate value proposition on the candidate side: contextual preparation, guided answers, and interview practice.
+- **PM interpretation:** The B2B-to-B2C change is documented as a deliberate product-learning decision, not silently rewritten. The original approval form is retained as the historical starting point.
+- **Commercial learning:** The original ₹40 bundled pricing was also revised. The current product separates Basic, Pro, and AI Mock Interview so that value and cost-to-serve can be measured by workflow.
 
 ### Final Reflection
 - **Where AI accelerated PM work:** The AI drastically reduced the time spent formatting tables, drafting boilerplate structure, and brainstorming baseline metrics. It acted as an excellent sounding board for risk analysis.

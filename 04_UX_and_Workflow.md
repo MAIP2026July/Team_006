@@ -14,7 +14,7 @@ graph TD
     %% Lane 1: Candidate Actions
     subgraph Lane_Candidate["👤 LANE 1: CANDIDATE (Engineering Student)"]
         A1["1. Upload Resume (PDF) & Paste JD"] --> A2["2. Review 5-Question Free Preview"]
-        A2 --> A3["3. Click 'Unlock Prep Guide' (₹40)"]
+        A2 --> A3["3. Choose Paid Path: Basic ₹30 / Pro ₹60 / Mock ₹100"]
         A3 --> A4["4. Review 25-Question Guide & STAR Answers<br><b>[Human-in-the-Loop Override]</b>"]
         A4 --> A5["5. Speak Answers into Mic in Voice Room"]
         A5 --> A6["6. Review Delivery Scorecard & Download PDF"]
@@ -32,15 +32,15 @@ graph TD
 
     %% Lane 3: Gateway
     subgraph Lane_Payment["💳 LANE 3: RAZORPAY GATEWAY"]
-        C1["Process UPI / Card / NetBanking (₹40.00)"]
+        C1["Process UPI / Card / NetBanking for Selected Package"]
         C2["Emit 'order_paid' Webhook<br><b>[Deterministic HMAC Check]</b>"]
     end
 
     %% Lane 4: AI & Backend Engine
-    subgraph Lane_Backend_AI["🧠 LANE 4: BACKEND & AI ENGINE (GPT-5 mini / AWS Speech-to-Text)"]
+    subgraph Lane_Backend_AI["🧠 LANE 4: BACKEND & AI ENGINE (Commercial LLM API / Speech-to-Text API)"]
         D1["pdf-parse Text Extraction + Context Cap (< 2,000 tokens)<br><b>[Deterministic]</b>"]
-        D2["GPT-5 mini: Synthesize 5 Questions<br><b>[Probabilistic / LLM]</b><br><i>(Guardrail: Strict overlap with JD)</i>"]
-        D3["GPT-5 mini: Generate 25 STAR Answers & Pitfalls<br><b>[Probabilistic / LLM]</b>"]
+        D2["Foundation Model API: Synthesize 5 Questions<br><b>[Probabilistic / LLM]</b><br><i>(Guardrail: Strict overlap with JD)</i>"]
+        D3["Foundation Model API: Generate Structured Answers & Pitfalls<br><b>[Probabilistic / LLM]</b>"]
         D4["AWS Speech-to-Text: Audio-to-Text Transcription<br><b>[Probabilistic - Target WER &lt; 8%]</b>"]
         D5["Calculate WPM & Match Regex Fillers ('um', 'like')<br><b>[Deterministic]</b>"]
     end

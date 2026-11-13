@@ -62,7 +62,7 @@ To control costs and prevent context overflow, inputs undergo sanitization befor
 | :--- | :--- | :--- | :--- |
 | **Simple Rule-Based Keyword Matcher** | Extremely cheap, deterministic, zero latency | Cannot generate novel questions; unable to assess conceptual nuances in a project description. | **Rejected** as core generator; retained only for regex filler-word counting. |
 | **Fine-Tuned Open-Source LLM (e.g., Llama 3 8B)** | Full data control, offline deployability, zero vendor lock-in | High upfront GPU infrastructure costs, deployment complexity, cold-start latency on serverless backends. | **Rejected for MVP**; unviable for a lean pilot. |
-| **Commercial Foundation Model APIs (OpenAI GPT-5 mini)** | SOTA reasoning, large context window, fast time-to-market, negligible token cost ($0.15/1M input tokens). | Dependency on API uptime and rate limits. | **Selected:** Ideal for rapid experimentation, lowest initial capital expenditure, and reliable structured JSON outputs. |
+| **Commercial Foundation Model API** | Strong reasoning, large context windows, structured output support, and fast time-to-market. | Dependency on provider uptime, privacy terms, rate limits, and changing price/performance. | **Selected for MVP:** Provider/model is configurable and should be chosen through repeatable quality, latency, privacy, and cost benchmarks rather than hard-coded permanently. |
 
 ---
 
@@ -77,7 +77,7 @@ PrepLens evaluates system performance across three distinct tiers: **Technical P
 | **Technical** | **JSON Parsing Error Rate** | Automated server logging of malformed LLM responses | **< 0.5%** of all API calls |
 | **Content Quality** | **JD-Resume Contextual Relevance** | LLM-as-a-Judge scoring (rubric scale 1–5 evaluating question specificity to submitted JD) | **Score >= 4.2 / 5.0** |
 | **Content Quality** | **Hallucinated Tech Stack Rate** | Manual audit of generated questions referencing tools/skills not mentioned in JD or Resume | **< 2.0%** of generated questions |
-| **Business / Trust** | **Free-to-Paid Conversion Rate** | Ratio of unique users generating free questions who proceed to complete ₹40 payment | **>= 3.0%** (Pilot target) |
+| **Business / Trust** | **Free-to-Paid Conversion Rate** | Ratio of unique users generating free questions who proceed to purchase any paid package (Basic, Pro, or Mock) | **>= 3.0%** (Pilot target) |
 | **Business / Trust** | **Model Answer Dissatisfaction Rate**| User "Report Question / Inaccurate" click rate in the UI | **< 4.0%** of rendered questions |
 
 ---
@@ -93,7 +93,7 @@ To prevent shipping degraded prompt updates to production, PrepLens employs an a
       [Candidate LLM Prompt] ---> Generates Questions & Model Answers
                                                 |
                                                 v
-                                  [Evaluator Model: Gemini 1.5 Pro / GPT-4o]
+                                  [Evaluator Model: independent benchmark LLM / human-reviewed sample]
                                   Assesses output against 3 criteria:
                                   1. Contextual Grounding (Is it grounded in the JD?)
                                   2. Seniority Calibration (Is it appropriate for Freshers?)

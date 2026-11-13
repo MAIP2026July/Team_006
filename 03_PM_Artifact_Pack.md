@@ -1,7 +1,7 @@
 # Deliverable 03: PM Artifact Pack & PRD-Lite
 
 ## 1. Problem Statement
-Job seekers—particularly fresh graduates and early-career developers—experience a **70% to 90% failure rate** in technical screening rounds. While technically competent, candidates fail because they prepare for general textbook definitions rather than the exact tech stack and operational context specified in the employer’s Job Description (JD). 
+Job seekers—particularly fresh graduates and early-career developers—often prepare with generic interview content that is disconnected from the specific role they are targeting. PrepLens treats the scale and causes of this preparation gap as **pilot hypotheses to validate**, rather than asserting a universal interview-failure rate.
 
 Existing prep tools provide static, one-size-fits-all questionnaires that fail to evaluate a candidate’s unique project experience against real-world job criteria. Moreover, candidates lack affordable, objective environments to practice speaking under pressure, leading to speech dysfluency, rambling, and poor interview performance.
 
@@ -45,7 +45,7 @@ Existing prep tools provide static, one-size-fits-all questionnaires that fail t
 
 #### FR-3: Monetization & Paywall Integration (Razorpay)
 * **Description:** Micro-transaction gateway gating the Comprehensive Prep Guide and Voice Room.
-* **User Story:** *As a candidate, I want to securely pay a nominal fee of ₹40 via UPI/cards to unlock the full preparation guide and mock interview.*
+* **User Story:** *As a candidate, I want to choose an affordable one-time preparation package—Basic (₹30), Pro (₹60), or AI Mock Interview (₹100)—so I can pay only for the depth of preparation I need.*
 * **Specs & Validation:**
   * Integrated with Razorpay Standard Checkout API.
   * User submits Full Name and Email Address.
@@ -103,7 +103,7 @@ Features were scored using the **RICE** methodology (Reach × Impact × Confiden
 | Feature Candidate | Reach (Monthly Users) | Impact (0.5–3) | Confidence (%) | Effort (Person-Weeks) | RICE Score | Decision |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | **Resume × JD 5-Question Teaser** | 10,000 | 2.0 (High) | 90% | 2 | **9,000** | **Must Have (MVP)** |
-| **₹40 Razorpay Unlock + 25-Question Guide**| 4,000 | 3.0 (Massive) | 85% | 2 | **5,100** | **Must Have (MVP)** |
+| **Paid Prep Guides (Basic ₹30 / Pro ₹60)** | 4,000 | 3.0 (Massive) | 85% | 2 | **5,100** | **Must Have (MVP)** |
 | **Voice Mock Interview (Browser STT)** | 2,500 | 2.5 (High) | 70% | 3 | **1,458** | **Core Wedge (MVP)** |
 | **Speech Analytics Scorecard (WPM/Fillers)** | 2,000 | 1.5 (Med) | 80% | 2 | **1,200** | **Phase 2 (Immediate)**|
 | **Export Prep Guide to PDF** | 3,000 | 1.0 (Low) | 90% | 1 | **2,700** | **Must Have (MVP)** |
@@ -118,7 +118,7 @@ Features were scored using the **RICE** methodology (Reach × Impact × Confiden
 | PHASE 1: Controlled MVP (Weeks 1-4)                                                  |
 | * Resume & JD text ingestion                                                          |
 | * Single-shot generation of 5 free questions                                         |
-| * Razorpay payment integration (₹40 micro-transaction)                                |
+| * Razorpay payment integration for Basic ₹30 / Pro ₹60 / Mock ₹100                  |
 | * Delivery of 25-question Prep Guide with Model Answers & PDF export                   |
 | Gate: Verify > 3.0% free-to-paid conversion rate across 200 organic users.             |
 +---------------------------------------------------------------------------------------+
@@ -161,9 +161,9 @@ Features were scored using the **RICE** methodology (Reach × Impact × Confiden
             +------------------------------+------------------------------+
             |                                                             |
    [Product Engagement]                                          [Business & Monetization]
-- Free-to-Paid Conversion Rate (Target: 3.5%)                - Gross Contribution Margin (Target: > 70%)
+- Free-to-Paid Conversion Rate (Pilot target: 3.5%; to be validated)                - Gross Contribution Margin (Target: > 70%)
 - Mock Session Completion Rate (Target: > 65%)               - Cost of Goods Sold (COGS) per User (Target: < ₹10)
-- Average Practice Time per Session (> 8 mins)               - Return on Ad Spend / CAC Payback (< 3 days)
+- Average Practice Time per Session (> 8 mins)               - CAC Payback (< 3 days; pilot hypothesis, not observed performance)
             |                                                             |
             +------------------------------+------------------------------+
                                            |

@@ -22,10 +22,10 @@
 ## 3. Opportunity Framing & Problem Breakdown
 
 ### Why This Problem Matters
-In today's hyper-competitive tech recruitment landscape, hundreds of applicants contest for single openings. Technical candidates spend months learning data structures, frameworks, and syntax, yet up to **90% fail the interview stage**. Industry post-mortems reveal that failure rarely stems from raw technical incapability; rather, it stems from:
+In today's hyper-competitive tech recruitment landscape, hundreds of applicants contest for single openings. Technical candidates may spend substantial time learning data structures, frameworks, and syntax, yet still struggle to convert that preparation into strong interview performance. For this capstone, PrepLens treats the following as **product hypotheses to validate in pilot research**, rather than established causal facts:
 1. **Preparing for the Resume instead of the JD:** Candidates rehearse generic summaries of their past projects without mapping their experience to the company's specific stack, architectural patterns, and business domain.
 2. **The "Passive Reading" Trap:** Reading blogs or static lists creates an illusion of competence. When put under live verbal pressure, candidates stumble, use excessive filler words, and fail to structure answers concisely.
-3. **Prohibitive Coaching Costs:** Human mock interview coaching services (e.g., Interviewing.io, Topmate mentors) charge ₹2,000 to ₹10,000+ per hour, pricing out 95% of college students and freshers.
+3. **Cost and Scheduling Friction:** Human mock-interview coaching can be expensive and difficult to schedule for repeated practice. PrepLens therefore tests whether a low-cost, self-serve alternative can satisfy the preparation need for price-sensitive candidates.
 
 ### Why Existing Alternatives Fail
 | Alternative | Mechanism | Fatal Flaw |
@@ -33,7 +33,7 @@ In today's hyper-competitive tech recruitment landscape, hundreds of applicants 
 | **Static Question Portals** (GeeksforGeeks, LeetCode, Glassdoor) | Generic lists of "Top 50 React Questions" | Zero personalization; fails to synthesize the candidate's unique project scope with the specific JD requirements. |
 | **Raw ChatGPT / LLM Prompting** | User manually writes prompts like *"Ask me interview questions for this JD"* | High cognitive friction; requires expert prompt engineering to extract structured rubric-based answers; lacks audio simulation, pacing analytics, and payment-gated preparation guides. |
 | **Peer / Mirror Practice** | Practicing out loud alone or with college peers | Zero objective feedback; no domain expertise to evaluate whether the answer met industry benchmarks. |
-| **Human 1-on-1 Mentorship** | Booking verified tech mentors | Inelastic supply, scheduling friction, and high financial barrier (₹2,500–₹5,000/hr). |
+| **Human 1-on-1 Mentorship** | Booking verified tech mentors | Scheduling friction and a higher cost per practice session than self-serve digital preparation. |
 
 ---
 
@@ -44,7 +44,7 @@ To avoid the trap of "automating everything," potential AI features are evaluate
 | AI Feature / Capability | Business Value | Technical Feasibility | Strategic Priority | Rationale / Placement |
 | :--- | :--- | :--- | :--- | :--- |
 | **Resume × JD Contextual Question Generation** | **High** | **High** | **P0 (Core Wedge / MVP)** | Solves the primary pain point with fast inference and high margin; acts as the primary hook. |
-| **Comprehensive Prep Guide with Model Answers** | **High** | **High** | **P0 (Monetization Engine)** | Structured output (Approach + Ideal Answer + Pitfalls to avoid); drives the ₹40 micro-conversion. |
+| **Comprehensive Prep Guide with Model Answers** | **High** | **High** | **P0 (Monetization Engine)** | Structured output (Approach + Ideal Answer + Pitfalls to avoid); supports conversion into the paid **Basic (₹30)** or **Pro (₹60)** preparation guide. |
 | **Browser-Based Voice Mock Interview (STT)** | **High** | **Medium** | **P1 (Core Differentiator)** | Bridges the gap between passive reading and active verbal articulation; creates the "wow" factor. |
 | **Speech Analytics (WPM, Filler Words, Pacing)** | **Medium** | **High** | **P1 (Feedback Layer)** | Objective rule-based + NLP metrics derived from transcription timestamps; reinforces user trust. |
 | **Live Dynamic Multi-Turn Follow-Up Agent** | **High** | **Low** | **P2 (Phase 3 Roadmap)** | High latency and context management risk for MVP; deferred until single-turn simulation is proven. |
@@ -56,8 +56,8 @@ To avoid the trap of "automating everything," potential AI features are evaluate
 
 For the MVP and pilot scaling, PrepLens selects an **API-First & Workflow Orchestration Architecture**:
 
-* **Text Generation (LLM):** Partner via commercial APIs (OpenAI GPT-5 mini).
-  * *Why:* Training a proprietary foundational model requires millions in GPU compute and offers zero competitive edge for general reasoning. OpenAI GPT-5 mini provides state-of-the-art reasoning and context window capacity (handling multi-page resumes and long JDs) with ultra-low latency at fraction-of-a-cent token pricing.
+* **Text Generation (LLM):** Partner via a commercial foundation-model API, with the provider/model selected through quality, latency, structured-output reliability, privacy terms, and cost benchmarks.
+  * *Why:* Training a proprietary foundation model is unnecessary for the MVP. An API-first approach maximizes learning speed and lets PrepLens switch models as economics and performance change.
 * **Audio & Speech-to-Text (STT):** AWS Speech-to-Text (Amazon Transcribe).
   * *Why:* Low-latency transcription and enterprise-grade acoustic modeling. AWS Transcribe provides robust recognition of diverse technical jargon and regional speech patterns.
 * **Proprietary Moat / What We Build:**
@@ -74,10 +74,10 @@ To ground the product strategy in proven industry patterns, PrepLens benchmarks 
 
 ### Case 1: OpenAI Pricing, API Economics & Platform Dynamics
 * **What is Similar:** PrepLens is a vertical wrapper operating on top of commodity foundation models. Like startups analyzed in the OpenAI ecosystem, our Cost of Goods Sold (COGS) is tied directly to API token usage and audio transcription duration.
-* **What is Different:** OpenAI sells horizontal compute by token consumption ($/1M tokens). PrepLens decouples backend cost from user pricing by offering a predictable, low-friction micro-transaction (₹40 per guide/session).
+* **What is Different:** Foundation-model providers sell horizontal compute through usage-based APIs. PrepLens decouples backend cost from user pricing through simple one-time product packages: **Basic ₹30, Pro ₹60, and AI Mock Interview ₹100**.
 * **Lessons Transferred:** 
   1. *Token Inflation Vulnerability:* Long system prompts and uncontrolled user inputs can rapidly inflate inference costs. PrepLens applies strict pre-processing (truncating redundant resume boilerplate) to cap prompt token expenditure at < 2,500 tokens per call.
-  2. *Session Guardrails:* OpenAI’s compute-throttling strategies demonstrate why PrepLens must impose session caps (e.g., maximum 10 minutes or 5 voice questions per mock interview pass) to prevent power users from consuming margin.
+  2. *Session Guardrails:* Usage-based AI economics demonstrate why PrepLens must impose session caps (e.g., maximum 10 minutes or 5 voice questions per mock interview pass) to prevent power users from consuming margin.
 * **What PrepLens Does Differently:** Instead of an opaque subscription that induces consumer churn, PrepLens leverages an event-driven micro-transaction model tailored to the Indian student demographic.
 
 ### Case 2: Yellow.ai & Enterprise Conversational UX
