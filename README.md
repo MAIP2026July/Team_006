@@ -119,12 +119,4 @@ Because generative AI is probabilistic, the system enforces strict automated che
 
 ---
 
-### 3. Evaluator's 3-Minute Walkthrough (Live Happy-Path Verification)
-Evaluators or faculty members can test the live application in under 3 minutes using the following test scenario:
-1. **Navigate:** Open the live app at [https://preplensai.app](https://preplensai.app).
-2. **Intake:** Select **"Fresher"** and industry **"IT / Software"**.
-3. **Test Context:** 
-   * Paste a brief technical job description (e.g., *"Junior React Developer with knowledge of JavaScript, HTML/CSS, REST APIs, and Git"*).
-   * Upload any standard computer science resume (or use sample text).
-4. **Generate Free Preview:** Click **"Generate Questions"**. Verify that the full-page animated status loader appears and that 5 custom-tailored interview questions render in `< 3.5 seconds`.
-5. **Test Voice Mock Room:** Enter the AI Mock Interview room, allow microphone access, speak an answer for 30 seconds, and observe real-time speech-to-text transcription followed by the WPM delivery scorecard.
+
